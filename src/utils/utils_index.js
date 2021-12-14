@@ -1,4 +1,14 @@
-const movieArray = [];
+const fs = require("fs");
+// const stringMovieArr = fs.readFileSync("./storage.jason");
+let movieArray;
+
+const getMovieData = () => {
+    try {
+        movieArray = JSON.parse(fs.readFileSync("./storage.json"))
+    }   catch (error) {
+        movieArray = []
+    }
+}
 
 class Movie {
     constructor(title, director = "Judas Booth", misc = "") {
@@ -13,6 +23,11 @@ class Movie {
     list() {
         console.log(movieArray);
     }
+    save() {
+        //save movie arrray to json file
+        fs.writeFileSync("./storage.json", JSON.stringify(movieArray));
+        ("");
+    }
 }
 
-module.exports = Movie
+module.exports = { Movie, getMovieData };
